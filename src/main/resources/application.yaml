@@ -1,0 +1,68 @@
+#base-uri: ${BASE_URI:http://localhost:8080}
+oauth:
+  client-id: ${CLIENT_ID:7cf5da4e0830000}
+  client-secret: ${CLIENT_SECRET:d5a57cc71f53d015f5c8b664c6d2d2a3ed22474a}
+  authorization-uri: ${AUTHORIZATION_URI:https://accounts.dustlight.cn/authorize}
+  token-uri: ${TOKEN_URI:https://api.dustlight.cn/v1/oauth/token}
+  user-info-uri: ${USER_INFO_URI:https://api.dustlight.cn/v1/user}
+  introspection-uri: ${INTROSPECTION_URI:https://api.dustlight.cn/v1/token/validity}
+mysql:
+  host: "instance-2"
+  port: 30010
+  db: stream
+  charset: "utf8"
+  ssl: false
+  username: "root"
+  password: "123456"
+redis:
+  host: "instance-2"
+  port: 30020
+
+spring:
+  r2dbc:
+    url: r2dbc:mysql://${mysql.host:localhost}:${mysql.port:3306}/${mysql.db}?characterEncoding=${mysql.charset:utf8}&useSSL=${mysql.ssl:false}
+    username: ${mysql.username}
+    password: ${mysql.password}
+    pool:
+      max-idle-time: 600000
+      max-life-time: 1800000
+      max-size: 3
+      max-acquire-time: 30000
+      initial-size: 1
+  #    schema: classpath:scheme.sql
+  #    data: classpath:data.sql
+  redis:
+    host: ${redis.host}
+    port: ${redis.port}
+
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          client-id: ${oauth.client-id}
+          client-secret: ${oauth.client-secret}
+          introspection-uri: ${oauth.introspection-uri}
+      client:
+        provider:
+          dustlight:
+            authorization-uri: ${oauth.authorization-uri}
+            token-uri: ${oauth.token-uri}
+            user-info-uri: ${oauth.user-info-uri}
+            user-name-attribute: uid
+        registration:
+          dustlight:
+            client-id: ${oauth.client-id}
+            client-secret: ${oauth.client-secret}
+            authorization-grant-type: client_credentials
+
+springdoc:
+  api-docs:
+    path: /v1/api-doc
+  swagger-ui:
+    path: /v1/swagger-ui
+    oauth:
+      client-id: 7cf60210d830000
+      use-basic-authentication-with-access-code-grant: true
+logging:
+  level:
+    com.example.streamservice.*: debug
