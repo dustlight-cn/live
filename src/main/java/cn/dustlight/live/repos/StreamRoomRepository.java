@@ -57,7 +57,7 @@ public interface StreamRoomRepository extends ReactiveCrudRepository<StreamRoom,
             "LEFT JOIN " + Star.TABLE_NAME + " AS s " +
             "ON s.roomId=b.id " +
             "GROUP BY b.id " +
-            "ORDER BY type is NULL,-type,-stars LIMIT :offset,:limit")
+            "ORDER BY type is NULL,type DESC,stars DESC LIMIT :offset,:limit")
     Flux<StreamRoom> listRooms(@Param("offset") Integer offset,
                                @Param("limit") Integer limit);
 }

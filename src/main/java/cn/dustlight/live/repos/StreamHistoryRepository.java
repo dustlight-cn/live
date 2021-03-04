@@ -16,7 +16,7 @@ public interface StreamHistoryRepository extends ReactiveCrudRepository<StreamHi
     Mono<StreamHistory> getLatestHistory(@Param("roomId") Long roomId);
 
     @Query("SELECT a.* FROM " + StreamHistory.TABLE_NAME + " a, " +
-            "(SELECT roomId,max(date) as date FROM " + StreamHistory.TABLE_NAME + " WHERE roomId IN (:roomId) GROUP BY roomId) as b " +
+            "(SELECT roomId,MAX(date) as date FROM " + StreamHistory.TABLE_NAME + " WHERE roomId IN (:roomId) GROUP BY roomId) as b " +
             "WHERE a.roomId=b.roomId AND a.date=b.date")
     Flux<StreamHistory> getLatestHistories(@Param("roomId") List<Long> roomId);
 
