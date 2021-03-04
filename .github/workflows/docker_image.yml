@@ -31,7 +31,7 @@ jobs:
         find -name "*-javadoc.jar" -exec rm {} \;
         jarName=`find *.jar`
         tagName=${jarName%.jar}
-        tagName=${tagName#auth-service-}
+        tagName=${tagName#live-service-}
         cp $jarName ../live-service.jar
         echo "jarName=$jarName" >> $GITHUB_ENV
         echo "tagName=$tagName" >> $GITHUB_ENV
