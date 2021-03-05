@@ -43,7 +43,7 @@ export default {
     src() {
       if (this.room == null || this.room.id == null)
         return null;
-      return this.$cfg.resourceHost + "/live/" + this.room.id + "/index.m3u8"
+      return this.$cfg.resourceHost + "/" + this.room.id + "/index.m3u8"
     },
     streaming() {
       return this.room && this.room.streaming;

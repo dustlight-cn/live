@@ -48,7 +48,7 @@ export default {
     computedSrc() {
       if (this.room == null || this.room.id == null)
         return this.src;
-      return this.$cfg.resourceHost + "/live/" + this.room.id + "/preview.png";
+      return this.$cfg.resourceHost + "/" + this.room.id + "/preview.png";
     }
   },
   watch: {

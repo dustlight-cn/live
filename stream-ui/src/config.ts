@@ -50,9 +50,11 @@ export interface Config {
 
 const config: Config = {
   // host: "http://localhost:8080",
-  host: "http://stream.vaiwan.com",
-  resourceHost: "http://instance-2:31001",//"http://nginx-rtmp.vaiwan.com",
-  rtmpHost: "rtmp://instance-2:31000/stream/",
+  // resourceHost: "http://instance-2:31001",
+  // rtmpHost: "rtmp://instance-2:31000/stream/",
+  host: "https://api.dustlight.cn/live",
+  resourceHost: "https://live.dustlight.cn/hls",
+  rtmpHost: "rtmp://api.dustlight.cn:31935/stream/",
   oauth: {
     authorizationUri: "https://accounts.dustlight.cn/authorize",
     userInfoUrl: "https://accounts.dustlight.cn/personal-info",
