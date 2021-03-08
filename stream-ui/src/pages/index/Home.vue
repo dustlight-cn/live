@@ -23,7 +23,7 @@
               </q-item-section>
               <q-item-section side>
                 <q-item-label>
-                  <q-icon name="person"/>
+                  <q-icon name="star"/>
                   {{ theRoom.stars }}
                 </q-item-label>
               </q-item-section>

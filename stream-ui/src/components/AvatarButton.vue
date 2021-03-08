@@ -5,7 +5,7 @@
         <avatar :user="user"/>
         <q-menu v-if="user && user.uid">
           <div class="text-center q-pa-md">
-            <q-btn class="q-ma-sm" rounded dense flat @click="openURL($cfg.oauth.userInfoUrl)">
+            <q-btn class="q-ma-sm" rounded dense flat :to="{name: 'mine'}">
               <avatar :size="avatarSize" :user="user"/>
             </q-btn>
             <div class="text-bold">{{ user.nickname }}</div>
@@ -13,7 +13,13 @@
           </div>
           <q-list style="min-width: 150px;">
             <q-separator/>
-            <q-item class="text-black" v-ripple clickable v-close-popup
+            <q-item v-ripple clickable v-close-popup
+                    :to="{name: 'mine'}">
+              <q-item-section class="text-center">
+                {{ $t("menu.mine") }}
+              </q-item-section>
+            </q-item>
+            <q-item v-ripple clickable v-close-popup
                     @click="openURL($cfg.oauth.userInfoUrl)">
               <q-item-section class="text-center">
                 {{ $t("settings") }}

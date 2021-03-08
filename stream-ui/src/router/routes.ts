@@ -29,6 +29,11 @@ const routes: RouteConfig[] = [
             name: 'mine',
             path: 'mine',
             component: () => import('pages/index/Mine.vue')
+          },
+          {
+            name: 'editRoom',
+            path: 'mine/room',
+            component: () => import('pages/index/EditRoom.vue')
           }
         ]
       },
