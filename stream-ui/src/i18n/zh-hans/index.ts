@@ -8,6 +8,7 @@ export default {
   save: "保存",
   create: "创建",
   watch: "观看",
+  search: "搜索",
   logoutSuccess: "注销成功",
   updateSuccess: "更新成功",
   createSuccess: "创建成功",

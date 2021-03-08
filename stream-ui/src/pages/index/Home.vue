@@ -68,6 +68,21 @@
         </q-item>
       </template>
     </fit-grid>
+
+<!--    <q-page-sticky position="bottom-right" :offset="[18, 18]">-->
+<!--      <q-fab-->
+<!--        icon="search"-->
+<!--        direction="left"-->
+<!--        color="accent"-->
+<!--        v-model="searching"-->
+<!--      >-->
+<!--        <div style="max-width: 250px;">-->
+<!--          <q-card style="width: 250px;">-->
+<!--            <q-input debounce="500" v-model="q" :label="$t('search')" filled/>-->
+<!--          </q-card>-->
+<!--        </div>-->
+<!--      </q-fab>-->
+<!--    </q-page-sticky>-->
     <q-inner-loading :showing="loading" size="50">
       <q-spinner-dots size="50" color="primary"/>
     </q-inner-loading>
@@ -79,6 +94,7 @@
         :input="true"
       >
       </q-pagination>
+
     </div>
   </q-page>
 
@@ -102,6 +118,8 @@ export default {
       loading: false,
       page: 1,
       limit: 10,
+      searching: false,
+      q: ""
     }
   },
   methods: {
@@ -113,7 +131,7 @@ export default {
       if (this.loading)
         return
       this.loading = true
-      this.$roomsApi.getRooms(null, "", (this.page - 1) * this.limit, this.limit)
+      this.$roomsApi.getRooms(null, this.q, (this.page - 1) * this.limit, this.limit)
         .then(res => {
           this.rooms = res.data.data
           if (this.rooms != null && this.rooms[0] != null && this.rooms[0].streaming == true
@@ -138,6 +156,15 @@ export default {
   watch: {
     page() {
       this.loadStreamRooms()
+    },
+    searching() {
+      if (!this.searching) {
+        this.q = "";
+        this.refresh()
+      }
+    },
+    q() {
+      this.refresh()
     }
   }
 }

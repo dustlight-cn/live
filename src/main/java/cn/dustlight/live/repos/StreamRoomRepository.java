@@ -38,7 +38,7 @@ public interface StreamRoomRepository extends ReactiveCrudRepository<StreamRoom,
             "FROM (SELECT * FROM " + StreamRoom.TABLE_NAME + " WHERE MATCH(name,description) AGAINST(:key) LIMIT :offset,:limit) AS r " +
             "LEFT JOIN " + Star.TABLE_NAME + " AS s " +
             "ON r.id=s.roomId " +
-            "GROUP BY r.id ORDER BY -stars ")
+            "GROUP BY r.id ORDER BY stars DESC")
     Flux<StreamRoom> searchRooms(@Param("key") String key,
                                  @Param("offset") Integer offset,
                                  @Param("limit") Integer limit);
