@@ -7,6 +7,7 @@ export default {
   logout: "注销",
   save: "保存",
   create: "创建",
+  watch: "观看",
   logoutSuccess: "注销成功",
   updateSuccess: "更新成功",
   createSuccess: "创建成功",

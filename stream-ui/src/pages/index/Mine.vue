@@ -56,7 +56,6 @@
                 </q-item-section>
               </q-item>
 
-
               <q-item>
                 <q-item-section>
                   <q-item-label>{{ $t('roomStars') }}</q-item-label>
@@ -65,11 +64,22 @@
               </q-item>
 
               <q-separator/>
+
+              <q-item clickable v-ripple :to="{name:'live',params:{id:room.id}}">
+                <q-item-section>
+                  <q-item-label>{{ $t('watch') }}</q-item-label>
+                </q-item-section>
+                <q-item-section side>
+                  <q-icon name="keyboard_arrow_right"/>
+                </q-item-section>
+              </q-item>
+
+              <q-separator/>
+
               <q-expansion-item>
                 <template v-slot:header>
                   <q-item-section>
                     <q-item-label>{{ $t('pushStream') }}</q-item-label>
-                    <!--                    <q-item-label caption>{{ getPushStreamUrl(user, token) }}</q-item-label>-->
                   </q-item-section>
                 </template>
                 <template v-slot:default>
