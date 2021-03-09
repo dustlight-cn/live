@@ -69,20 +69,6 @@
       </template>
     </fit-grid>
 
-<!--    <q-page-sticky position="bottom-right" :offset="[18, 18]">-->
-<!--      <q-fab-->
-<!--        icon="search"-->
-<!--        direction="left"-->
-<!--        color="accent"-->
-<!--        v-model="searching"-->
-<!--      >-->
-<!--        <div style="max-width: 250px;">-->
-<!--          <q-card style="width: 250px;">-->
-<!--            <q-input debounce="500" v-model="q" :label="$t('search')" filled/>-->
-<!--          </q-card>-->
-<!--        </div>-->
-<!--      </q-fab>-->
-<!--    </q-page-sticky>-->
     <q-inner-loading :showing="loading" size="50">
       <q-spinner-dots size="50" color="primary"/>
     </q-inner-loading>
@@ -109,6 +95,7 @@ import StreamPlayer from "../../components/StreamPlayer";
 
 export default {
   name: "Home",
+  requireSearch: true,
   components: {StreamPlayer, StatusBadge, FitGrid, Avatar, Poster},
   data() {
     return {
@@ -118,21 +105,22 @@ export default {
       loading: false,
       page: 1,
       limit: 10,
-      searching: false,
       q: ""
     }
   },
   methods: {
     refresh() {
       this.page = 1
-      this.loadStreamRooms();
+      return this.loadStreamRooms();
     },
     loadStreamRooms() {
       if (this.loading)
         return
       this.loading = true
-      this.$roomsApi.getRooms(null, this.q, (this.page - 1) * this.limit, this.limit)
+      return this.$roomsApi.getRooms(null, this.q, (this.page - 1) * this.limit, this.limit)
         .then(res => {
+          if (this.q && this.q.trim().length > 0)
+            this.theRoom = null;
           this.rooms = res.data.data
           if (this.rooms != null && this.rooms[0] != null && this.rooms[0].streaming == true
             && (this.theRoom == null || this.theRoom.id == this.rooms[0].id)) {
@@ -152,19 +140,16 @@ export default {
   },
   mounted() {
     this.refresh();
+    this.$root.$on("onSearch", (q, onDone) => {
+      this.q = q;
+      let r = this.refresh();
+      onDone(r)
+    })
+    this.$root.$emit("showSearch", true);
   },
   watch: {
     page() {
       this.loadStreamRooms()
-    },
-    searching() {
-      if (!this.searching) {
-        this.q = "";
-        this.refresh()
-      }
-    },
-    q() {
-      this.refresh()
     }
   }
 }

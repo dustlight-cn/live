@@ -135,9 +135,9 @@ public class RepositoryStreamService implements StreamService {
     }
 
     protected Mono<QueryResult<StreamRoom>> fillStreamRoomEntities(Flux<StreamRoom> roomFlux, Integer count) {
-        return roomFlux.collectList()
+        return count > 0 ? roomFlux.collectList()
                 .map(RepositoryStreamService::toRoomMap)
-                .filterWhen(map -> historyRepository
+                .filterWhen(map -> map.size() > 0 ? historyRepository
                         .getLatestHistories(Arrays.asList(getRoomIds(map.values())))
                         .collectList()
                         .map(streamHistories -> {
@@ -145,9 +145,10 @@ public class RepositoryStreamService implements StreamService {
                                 if (map.containsKey(history.getRoomId()))
                                     map.get(history.getRoomId()).setStreaming(history.getType() == StreamHistory.TYPE_PUSH);
                             return true;
-                        })
+                        }) :
+                        Mono.just(true)
                 )
-                .filterWhen(map -> userService
+                .filterWhen(map -> map.size() > 0 ? userService
                         .getUsers(getRoomIds(map.values()))
                         .map(users -> users.getData())
                         .map(users -> {
@@ -155,9 +156,12 @@ public class RepositoryStreamService implements StreamService {
                                 if (map.containsKey(user.getUid()))
                                     map.get(user.getUid()).setOwner(user);
                             return true;
-                        })
+                        }) :
+                        Mono.just(true)
                 )
                 .map(map -> map.values())
-                .map(streamRooms -> new QueryResult<>(count, streamRooms));
+                .map(streamRooms -> new QueryResult<>(count, streamRooms))
+                :
+                Mono.just(new QueryResult<>(0, Collections.emptyList()));
     }
 }
