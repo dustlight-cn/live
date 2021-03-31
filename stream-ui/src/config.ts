@@ -16,6 +16,10 @@ export interface Config {
    */
   rtmpHost: string,
   /**
+   * 聊天室路径
+   */
+  imHost: string,
+  /**
    * OAuth 配置
    */
   oauth: {
@@ -53,6 +57,7 @@ const config: Config = {
   // resourceHost: "http://instance-2:31001",
   // rtmpHost: "rtmp://instance-2:31000/stream/",
   host: "https://api.dustlight.cn/live",
+  imHost: "wss://api.dustlight.cn/im",
   resourceHost: "https://live.dustlight.cn/hls",
   rtmpHost: "rtmp://api.dustlight.cn:31935/stream/",
   oauth: {

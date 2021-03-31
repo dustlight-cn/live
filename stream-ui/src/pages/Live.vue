@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <div v-if="flag">
+  <div>
+    <q-page v-if="flag">
       <stream-player :room="room"/>
       <q-list>
         <q-expansion-item
@@ -51,53 +51,61 @@
         </q-item>
         <q-separator/>
       </q-list>
-    </div>
-    <div v-else class="q-pt-lg q-pl-sm q-pr-sm q-pb-lg">
-      <div class="row q-gutter-md justify-center">
-        <q-card style="width: 906px;">
-          <q-item>
-            <q-item-section avatar>
-              <avatar :user="owner" :size="45"/>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label class="text-subtitle1 text-bold">
-                <q-skeleton v-if="loading || !room" width="35%" type="text"/>
-                <span v-else>{{ room.name || "-" }}</span>
-              </q-item-label>
-              <q-item-label caption>
-                <q-skeleton v-if="loading || !owner" width="15%" type="text"/>
-                <span v-else>{{ ownerName || "-" }}</span>
-              </q-item-label>
-            </q-item-section>
-            <q-item-section side class="text-subtitle2">
-              <status-badge :data="room"/>
-            </q-item-section>
-          </q-item>
-          <stream-player :room="room"/>
-          <q-item>
-            <q-item-section>
-              <q-item-label caption>
-                <q-skeleton v-if="loading || !room" width="25%" type="text"/>
-                <span v-else>{{ room.description || "-" }}</span>
-              </q-item-label>
-            </q-item-section>
-            <q-item-section side>
-              <q-skeleton v-if="loading || !room" width="20px" type="text"/>
-              <span v-else><q-icon name="star"/> {{ room.stars || "0" }}</span>
-            </q-item-section>
-            <q-item-section v-if="room" side>
-              <q-btn no-caps :color="star?'grey':'pink'" flat
-                     @click="onStarButtonClick"
-                     :loading="starLoading"
-                     :disable="starLoading"
-                     :label="starButtonText"/>
-            </q-item-section>
-          </q-item>
-        </q-card>
-      </div>
-    </div>
 
-  </q-page>
+      <chat-box class="q-pt-sm"/>
+    </q-page>
+    <q-page v-else>
+      <div class="q-pt-lg q-pl-sm q-pr-sm q-pb-lg">
+        <div class="row q-gutter-md justify-center">
+          <q-card style="width: 906px;">
+            <q-item>
+              <q-item-section avatar>
+                <avatar :user="owner" :size="45"/>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label class="text-subtitle1 text-bold">
+                  <q-skeleton v-if="loading || !room" width="35%" type="text"/>
+                  <span v-else>{{ room.name || "-" }}</span>
+                </q-item-label>
+                <q-item-label caption>
+                  <q-skeleton v-if="loading || !owner" width="15%" type="text"/>
+                  <span v-else>{{ ownerName || "-" }}</span>
+                </q-item-label>
+              </q-item-section>
+              <q-item-section side class="text-subtitle2">
+                <status-badge :data="room"/>
+              </q-item-section>
+            </q-item>
+            <stream-player :room="room"/>
+            <q-item>
+              <q-item-section>
+                <q-item-label caption>
+                  <q-skeleton v-if="loading || !room" width="25%" type="text"/>
+                  <span v-else>{{ room.description || "-" }}</span>
+                </q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-skeleton v-if="loading || !room" width="20px" type="text"/>
+                <span v-else><q-icon name="star"/> {{ room.stars || "0" }}</span>
+              </q-item-section>
+              <q-item-section v-if="room" side>
+                <q-btn no-caps :color="star?'grey':'pink'" flat
+                       @click="onStarButtonClick"
+                       :loading="starLoading"
+                       :disable="starLoading"
+                       :label="starButtonText"/>
+              </q-item-section>
+            </q-item>
+          </q-card>
+
+          <q-card>
+            <chat-box class="full-height q-pt-sm"/>
+          </q-card>
+        </div>
+      </div>
+    </q-page>
+
+  </div>
 </template>
 
 <script>
@@ -105,10 +113,11 @@ import RequireAuthorization from "components/RequireAuthorization.vue";
 import Avatar from "components/Avatar.vue";
 import StatusBadge from "../components/StatusBadge";
 import StreamPlayer from "../components/StreamPlayer";
+import ChatBox from "../components/chat/ChatBox";
 
 export default {
   name: "Live",
-  components: {StreamPlayer, StatusBadge, Avatar, RequireAuthorization},
+  components: {ChatBox, StreamPlayer, StatusBadge, Avatar, RequireAuthorization},
   data() {
     return {
       id: this.$route.params.id,
