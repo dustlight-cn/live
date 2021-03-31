@@ -52,7 +52,7 @@
         <q-separator/>
       </q-list>
 
-      <chat-box class="q-pt-sm"/>
+      <chat-box class="q-pt-sm" style="height: 180px;"/>
     </q-page>
     <q-page v-else>
       <div class="q-pt-lg q-pl-sm q-pr-sm q-pb-lg">
