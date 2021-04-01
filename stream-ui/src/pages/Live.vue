@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-page v-if="flag">
+    <q-page class="container" v-if="flag">
       <stream-player :room="room"/>
       <q-list>
         <q-expansion-item
@@ -51,13 +51,13 @@
         </q-item>
         <q-separator/>
       </q-list>
-
-      <chat-box class="q-pt-sm" style="height: 180px;"/>
+      <chat-box/>
     </q-page>
+
     <q-page v-else>
-      <div class="q-pt-lg q-pl-sm q-pr-sm q-pb-lg">
-        <div class="row q-gutter-md justify-center">
-          <q-card style="width: 906px;">
+      <div class="q-pt-lg q-pl-xs q-pr-xs q-pb-lg">
+        <div class="fit row q-gutter-sm justify-center">
+          <q-card style="width: calc(100% - 250px);max-width: 906px">
             <q-item>
               <q-item-section avatar>
                 <avatar :user="owner" :size="45"/>
@@ -98,9 +98,10 @@
             </q-item>
           </q-card>
 
-          <q-card>
+          <q-card style="width: 200px">
             <chat-box class="full-height q-pt-sm"/>
           </q-card>
+
         </div>
       </div>
     </q-page>
@@ -200,5 +201,18 @@ export default {
 </script>
 
 <style scoped>
+html, body {
+  height: 100%;
+  margin: 0;
+}
 
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container > div:last-child {
+  flex: 1;
+}
 </style>

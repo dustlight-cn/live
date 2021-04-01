@@ -13,7 +13,7 @@
           </div>
           <q-separator class="q-mb-sm"/>
           <q-list v-if="loading.room">
-            <q-item v-for="index in 4">
+            <q-item v-for="index in 4" :key="index">
               <q-item-section>
                 <q-item-label>
                   <q-skeleton width="10%" type="text"/>
