@@ -53,13 +53,10 @@ export interface Config {
 }
 
 const config: Config = {
-  // host: "http://localhost:8080",
-  // resourceHost: "http://instance-2:31001",
-  // rtmpHost: "rtmp://instance-2:31000/stream/",
-  host: "https://api.dustlight.cn/live",
+  host: "https://live.api.dustlight.cn",
   imHost: "wss://api.dustlight.cn/im",
-  resourceHost: "https://live.dustlight.cn/hls",
-  rtmpHost: "rtmp://api.dustlight.cn:31935/stream/",
+  resourceHost: "https://live-hls.dustlight.cn/live",
+  rtmpHost: "rtmp://rtmp.dustlight.cn/stream/",
   oauth: {
     authorizationUri: "https://accounts.dustlight.cn/authorize",
     userInfoUrl: "https://accounts.dustlight.cn/personal-info",
